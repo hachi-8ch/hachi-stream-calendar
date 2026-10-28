@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111322">
+<title>はちの配信断捨離カレンダー</title>
+<style>
+:root{--bg:#0e1020;--card:#1a1d30;--card2:#23263b;--line:#33364d;--text:#f6f5fb;--muted:#afb1c6;--pink:#ff87b5;--cyan:#7de3d8;--purple:#bca4ff;--amber:#f7d296;--danger:#d5a5aa;--radius:19px}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}body{margin:0;padding-bottom:max(30px,env(safe-area-inset-bottom));min-height:100vh;background:radial-gradient(circle at 90% -100px,#3e2a53 0,transparent 40%),var(--bg)}button,textarea,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.wrap{max-width:790px;margin:0 auto;padding:17px 14px 35px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:3px 1px 10px}.tag{color:var(--pink);font-size:12px;letter-spacing:.13em;font-weight:900}.title{margin:3px 0 0;font-size:clamp(24px,6vw,31px);font-weight:900;letter-spacing:-.04em;line-height:1.3}.subtitle{margin:7px 0 16px;color:var(--muted);font-size:12px}.monthbar{display:flex;align-items:center;gap:6px;background:var(--card);padding:8px;border:1px solid var(--line);border-radius:17px}.arrow{background:var(--card2);border:0;color:var(--text);border-radius:12px;width:44px;height:45px;font-size:26px}.monthtitle{text-align:center;flex:1;font-size:20px;font-weight:800;white-space:nowrap}.monthtitle small{display:block;color:var(--muted);font-size:11px;font-weight:500}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:14px 0}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 5px;text-align:center}.stat .num{font-size:25px;font-weight:900;line-height:1.2}.stat span{font-size:11px;color:var(--muted)}.stat.h .num{color:var(--pink)}.stat.c .num{color:var(--cyan)}.stat.p .num{color:var(--purple)}.notice{display:flex;gap:8px;align-items:center;padding:10px 12px;background:#24243b;border:1px solid #454263;border-radius:13px;color:#e7dff4;font-size:12px;line-height:1.6;margin-bottom:13px}.noticesmall{font-size:11px;color:#adafc3;margin:8px 4px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.seg{display:flex;gap:4px;background:#1d2134;border:1px solid var(--line);padding:4px;border-radius:13px}.seg button{color:var(--muted);font-size:12px;background:transparent;border:0;border-radius:10px;padding:9px 10px;font-weight:700}.seg button.active{color:#151423;background:#f1e6f5}.actrow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}.btn{color:var(--text);border:1px solid #55566d;background:var(--card2);border-radius:11px;padding:11px 13px;font-size:13px;font-weight:750;line-height:1.3;min-height:41px}.btn.primary{background:linear-gradient(135deg,#fa9ec1,#d5b0fa);border:0;color:#271d30}.btn.secondary{background:#343047;color:#eee3ff}.btn.soft{border-color:#4e4863}.btn.wide{width:100%}.btn.warn{color:#ffb9c1}.btn.sm{padding:8px 9px;min-height:35px;font-size:11px}.btn.toned{background:#283847;color:#bceef1;border-color:#436070}.sectionhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-end;margin:16px 1px 9px}.sectionhead h2{margin:0;font-size:16px}.sectionhead .hint{font-size:12px;color:var(--muted)}.daycard{background:var(--card);border:1px solid var(--line);border-radius:17px;margin:9px 0;overflow:hidden}.dayhead{padding:12px 13px 8px;display:flex;justify-content:space-between;align-items:center}.daynum{font-size:16px;font-weight:850}.weekday{color:var(--muted);font-size:12px}.sun{color:#ff9cab}.sat{color:#8cbcff}.event{margin:6px 10px 10px;background:#23263b;border:1px solid #3d3d57;border-radius:13px;padding:11px;display:flex;gap:10px;align-items:center;justify-content:space-between}.event.cut{background:#252433;border-color:#393746;opacity:.86}.event.cut .who,.event.cut .when{text-decoration:line-through;text-decoration-color:#bfb7c8}.evmain{min-width:0}.evmain .who{display:block;font-size:15px;font-weight:900}.evmain .when{display:block;font-size:13px;color:var(--muted);margin-top:3px}.evmain .game{font-size:12px;color:#bcbacf;overflow-wrap:anywhere}.pill{display:inline-block;border-radius:5px;padding:3px 7px;font-size:11px;font-weight:800}.hachi{color:var(--pink)}.char{color:var(--cyan)}.pair{color:var(--purple)}.btn.keep{background:#203d3f;border-color:#417e7d;color:#a2f4df}.btn.skip{background:#3d3041;border-color:#685368;color:#efd6ef}.evbuttons{display:grid;gap:5px;min-width:78px}.off{margin:3px 13px 13px;color:#a9abc0;font-size:12px}.empty{margin-top:15px;padding:35px 16px;text-align:center;border:1px dashed #555168;border-radius:18px;color:#c9bfd4;line-height:1.8}.details{margin:9px 0 0;color:var(--muted);font-size:12px}.details summary{cursor:pointer;user-select:none}.details-inner{margin:7px 0 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.calhead{text-align:center;font-size:11px;color:var(--muted);padding:6px 0}.calday{border:1px solid #383a52;background:var(--card);border-radius:8px;padding:5px 3px;min-height:96px;min-width:0;color:inherit;text-align:left}.calday.blank{background:transparent;border-color:transparent}.calday.current{border-color:#8e77a8}.calday .date{display:block;text-align:center;font-size:12px;font-weight:800;margin-bottom:5px}.calday .date.sun{color:#ff9cab}.calday .date.sat{color:#8cbcff}.chip{display:block;margin:3px 0;padding:5px 3px;border-radius:5px;font-size:10px;line-height:1.25;overflow-wrap:anywhere;font-weight:700;background:#343449}.chip.hachi{background:#4a3048}.chip.char{background:#25444c}.chip.pair{background:#403858}.chip.cut{opacity:.45;text-decoration:line-through}.chip.off{color:#a0a3b7;background:#2a2b3c;margin:0;padding:4px 2px;font-size:10px}.cal-info{text-align:center;color:var(--muted);font-size:11px;margin:9px 0 15px}.footer-actions{margin-top:25px;padding:17px;border:1px solid var(--line);border-radius:17px;background:var(--card)}.footer-actions h3{font-size:15px;margin:0 0 10px}.footer-actions .actrow{margin-bottom:6px}.footnote{font-size:11px;color:var(--muted);line-height:1.7}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#eee6f5;color:#251e2e;padding:13px 18px;border-radius:12px;box-shadow:0 8px 35px #0008;font-weight:800;font-size:13px;max-width:95vw;z-index:1000}.hide{display:none!important}dialog{width:min(95vw,610px);max-height:88dvh;overflow:auto;background:#1d2035;color:var(--text);border:1px solid #56536e;border-radius:20px;padding:18px;box-shadow:0 10px 70px #000b}dialog::backdrop{background:#060711c9}dialog h2{margin:2px 0 12px;font-size:20px}dialog h3{margin:15px 0 7px;font-size:14px}label{display:block;color:#deddea;font-size:13px;font-weight:750;margin:12px 0 5px}.field{width:100%;background:#111528;border:1px solid #56536f;color:#fff;border-radius:11px;padding:12px;min-height:46px;font-size:15px}textarea.field{height:190px;resize:vertical;font-size:13px;line-height:1.6}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formactions{display:flex;gap:8px;margin-top:19px;flex-wrap:wrap}.formactions .btn{flex:1}.dialog-note{color:var(--muted);font-size:12px;line-height:1.7}.example{font-size:12px;white-space:pre-wrap;background:#111528;border:1px solid #424057;border-radius:10px;padding:12px;line-height:1.65;color:#d6d2ea}.modal-list{max-height:45vh;overflow:auto}.modal-event{display:flex;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #3a3d53}.modal-event .lab{flex:1}.importres{margin-top:10px;font-size:12px;color:#c7d4e9}.togglebutton{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px;font-weight:500}input[type=checkbox]{accent-color:#f9a3ce;width:18px;height:18px}.smallmuted{font-size:11px;color:var(--muted)}
+@media(min-width:640px){.calday{min-height:120px;padding:7px}.chip{font-size:12px}.wrap{padding:24px}.event{padding:13px}.calday .date{font-size:13px}}@media(max-width:370px){.seg button{padding:9px 7px;font-size:11px}.stats{gap:4px}.stat .num{font-size:22px}.wrap{padding-left:9px;padding-right:9px}.calday{min-height:92px}.chip{font-size:9px}}
+.copy-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}.copy-grid .btn{min-height:69px;text-align:center;font-size:14px}.copy-grid .copy-count{display:block;font-size:11px;opacity:.78;font-weight:650;margin-top:5px}.copy-hachi{background:#463044;border-color:#805b79;color:#ffe0ee}.copy-char{background:#1d4047;border-color:#4d7e86;color:#d2fcfa}.copy-grid .btn:active{transform:scale(.985)}.copy-prompt{min-height:155px;font-size:14px}.copy-help{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* 個人運用版：仕事・プライベートの確認 */
+.ref-tools{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0 5px}.ref-tools .btn{flex:1;min-width:148px}
+.ref-panel{border:1px solid #41516a;background:#191f30;border-radius:15px;padding:12px;margin:8px 0 15px}
+.ref-panel h3{margin:0 0 8px;font-size:14px}.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 9px}
+.ref-check{display:flex;align-items:center;gap:7px;padding:6px 1px;margin:0;font-size:12px;font-weight:600;line-height:1.3}
+.ref-check input{flex:none}.refs{display:flex;flex-wrap:wrap;gap:5px;margin:7px 10px 10px}
+.ref-item{border:1px solid #45475c;border-radius:8px;padding:6px 8px;font-size:11px;display:flex;align-items:center;gap:4px;background:#22273a;line-height:1.4;word-break:break-word}
+.ref-item button{border:0;background:#ffffff19;color:#fff;border-radius:5px;padding:3px 7px;min-height:26px;cursor:pointer}
+.ref-item.ref-hwork{color:#fbd5e5;border-color:#5b4054}.ref-item.ref-cwork{color:#a9e2f1;border-color:#38576a}
+.ref-item.ref-hprivate{color:#ffd9c7}.ref-item.ref-cprivate{color:#c8eff3}.ref-item.ref-shared{color:#c8f5b7;border-color:#427657}
+.ref-mini{display:block;margin:3px 0;padding:4px 2px;border-radius:5px;font-size:9px;line-height:1.25;overflow-wrap:anywhere;background:#2c3041;color:#d6def0}
+.ref-mini.ref-shared{background:#214334;color:#c4f6c8}.ref-mini.ref-hwork{background:#4a3141}.ref-mini.ref-cwork{background:#234552}
+.ref-warning{color:#f6d597;font-size:11px;padding:3px 12px 8px;line-height:1.45}
+.calday.conflict{border-color:#c79c4e;box-shadow:inset 0 0 0 1px #906d39}
+.ref-hint{font-size:11px;color:#aebbc8;line-height:1.6;padding:3px}
+@media(max-width:370px){.ref-check{font-size:11px}.ref-mini{font-size:8px}}
+
+/* v2: 見る人の切替・月間画像・一括インポート */
+.audience-wrap{margin:12px 0 10px;padding:12px 12px 10px;border-radius:16px;border:1px solid #45465e;background:#1a1d30}
+.audience-wrap h2{font-size:13px;margin:0 0 9px;color:#ddd5e9;letter-spacing:.02em}
+.audience-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.audience-btn{font-size:13px;font-weight:800;line-height:1.35;border-radius:12px;padding:12px 5px;background:#2b2e42;color:#ddd8e8;border:1px solid #4b4b65;min-height:48px}
+.audience-btn.active{border-color:#e0b4ed;box-shadow:0 0 0 1px #ba9ccf inset;background:#4c3d63;color:#fff}
+.audience-btn[data-audience=hachi].active{background:#59364d;border-color:#f7a9c7}
+.audience-btn[data-audience=char].active{background:#244950;border-color:#80dce1}
+.audience-tip{margin:8px 0 0;font-size:11px;color:#c0bdd1;line-height:1.5}
+.export-feature{border:1px solid #636087;background:linear-gradient(155deg,#272338,#1b1d30);border-radius:16px;padding:14px;margin:12px 0}
+.export-feature .btn{width:100%;font-size:15px;padding:14px 9px}
+.export-feature p{margin:7px 0 0;color:#bfc0d3;font-size:11px;line-height:1.6}
+@media(max-width:390px){.audience-btn{font-size:12px;padding:10px 2px}}
+
+.cloud-panel{padding:14px 15px;margin:0 0 14px;border:1px solid #555470;background:linear-gradient(125deg,#29223c,#18293a);border-radius:15px}
+.cloud-head{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.cloud-head strong{font-size:15px}
+.cloud-state{padding:5px 10px;border-radius:9px;background:#444057;font-size:12px;font-weight:900;color:#e7dafa}
+.cloud-state[data-kind="ok"]{background:#225543;color:#b9ffe3}
+.cloud-state[data-kind="error"]{background:#684144;color:#ffdae0}
+.cloud-panel p{margin:9px 0 12px;color:#d1d0e2;font-size:12px;line-height:1.6}
+.cloud-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cloud-controls .btn{min-height:39px}
+
+</style>
+</head>
+<body>
+<main class="wrap">
+ <header class="topbar"><div><div class="tag">🌷 HACHI × CHARANTY</div><h1 class="title">配信予定の断捨離 ✂️</h1></div><button id="backupTop" class="btn sm" aria-label="バックアップ">💾 保存</button></header>
+ <p class="subtitle">「やる」「見送る」を切り替えて、納得のいく配信カレンダーに。</p>
+ <div class="monthbar"><button id="prev" class="arrow" aria-label="前の月">‹</button><div class="monthtitle" id="monthTitle">2026年11月<small>MONTHLY STREAM PLANNER</small></div><button id="next" class="arrow" aria-label="次の月">›</button></div>
+
+ <section class="cloud-panel" aria-label="共有状況"><div class="cloud-head"><strong>☁️ 2人で共同編集</strong><span id="cloudState" class="cloud-state">初期設定待ち</span></div><p id="cloudDetail">Firebaseの初期設定後、2人がそれぞれGoogleでログインすると自動同期されるよ。</p><div class="cloud-controls"><button id="cloudLogin" class="btn primary">Googleでログイン</button><button id="cloudLogout" class="btn hide">ログアウト</button><span class="smallmuted" id="cloudIdentity"></span></div></section>
+ <div class="stats"><div class="stat"><div class="num" id="countAll">33</div><span>残す枠</span></div><div class="stat h"><div class="num" id="countHachi">12</div><span>🌷 はち</span></div><div class="stat c"><div class="num" id="countChar">9</div><span>🎮 Charanty</span></div><div class="stat p"><div class="num" id="countPair">12</div><span>💜 2人</span></div></div>
+ <div class="notice"><span>💡</span><span>「見送る」⇄「戻す」は2人の間で同期される。最新の内容はログインしてオンラインで確認してね。</span></div>
+ <section class="audience-wrap" aria-labelledby="audienceTitle"><h2 id="audienceTitle">👀 誰のカレンダーを表示する？</h2><div class="audience-options" role="group" aria-label="表示する配信者"><button class="audience-btn active" data-audience="all" aria-pressed="true">💜 全員</button><button class="audience-btn" data-audience="hachi" aria-pressed="false">🌷 はち</button><button class="audience-btn" data-audience="char" aria-pressed="false">🎮 Charanty</button></div><p class="audience-tip">個人表示にも「2人で配信」は含むよ。仕事・私用を表示する場合は本人＋共通予定を表示。</p></section>
+ <div class="export-feature"><button id="pictureQuick" class="btn primary">🗓️ 表示中の月をカレンダー画像で保存</button><p>縦長の一覧ではなく、1か月を7列に並べた画像（PNG）。「はち」「Charanty」だけでも保存できるよ。見送った枠は入れない。</p><label class="togglebutton" style="margin:10px 0 0"><input type="checkbox" id="imageWithRefs">画像にも仕事・私用を入れる（自分用・初期OFF）</label></div>
+ <div class="toolbar"><div class="seg" role="group" aria-label="表示内容"><button class="filter active" data-filter="keep">残す予定</button><button class="filter" data-filter="cut">見送った枠</button><button class="filter" data-filter="all">全部</button></div><div class="seg" role="group" aria-label="表示形式"><button class="view" data-view="list">一覧</button><button class="view active" data-view="calendar">月表示</button></div></div>
+ <div class="actrow"><button class="btn primary" id="add">＋ 配信を追加</button><button class="btn" id="paste">📋 予定をまとめて貼る</button><button class="btn" id="undo">↶ 戻す</button><button class="btn" id="redo">↷ やり直し</button></div>
+ <div class="ref-tools"><button class="btn toned" id="refToggle" aria-expanded="false">👀 仕事・私用も見る</button><button class="btn" id="refAdd">＋ 仕事・私用を登録</button></div>
+ <div class="ref-panel hide" id="refPanel"><h3>表示したい予定だけチェック</h3><div class="ref-grid">
+  <label class="ref-check"><input type="checkbox" class="refSwitch" value="hwork" checked>🩷 はちの仕事</label>
+  <label class="ref-check"><input type="checkbox" class="refSwitch" value="cwork" checked>💙 Charantyの仕事</label>
+  <label class="ref-check"><input type="checkbox" class="refSwitch" value="hprivate" checked>🌷 はちの私用</label>
+  <label class="ref-check"><input type="checkbox" class="refSwitch" value="cprivate" checked>🎮 Charantyの私用</label>
+  <label class="ref-check"><input type="checkbox" class="refSwitch" value="shared" checked>💚 2人の共通予定</label>
+ </div><p class="ref-hint">仕事・私用は配信のお知らせには含まれないよ。翌月分は「📋 予定をまとめて貼る」で一括取り込みできる。外部カレンダーとの自動同期はなし。</p></div>
+ <section class="footer-actions" aria-labelledby="noticeTitle"><h3 id="noticeTitle">📣 各自のお知らせ用にコピー</h3>
+  <div class="copy-grid"><button class="btn copy-hachi" id="copyHachi">🌷 はち用をコピー<span class="copy-count" id="copyHachiCount">24枠</span></button><button class="btn copy-char" id="copyChar">🎮 Charanty用をコピー<span class="copy-count" id="copyCharCount">21枠</span></button></div>
+  <p class="footnote">💜 2人配信は<strong>両方</strong>のお知らせに入るよ。見送った枠は含めないよ。</p>
+ </section>
+ <div class="sectionhead"><h2 id="sectionTitle">残す予定</h2><div class="hint" id="sectionHint"></div></div>
+ <section id="eventsContainer" aria-live="polite"></section>
+
+ <section class="footer-actions"><h3>🗓️ 予定をまとめて取り出す</h3><div class="actrow"><button class="btn primary" id="copy">📋 全配信をコピー</button><button class="btn" id="picture">🗓️ カレンダー画像保存</button><button class="btn" id="csv">CSV保存</button></div><p class="footnote">画像は「残す」配信だけを出力。仕事・私用は画像への追加を明示的に選んだ場合だけ含める（個人情報の公開に注意）。TimeTreeへの自動登録は行わない。</p></section>
+ <section class="footer-actions"><h3>💾 データ管理</h3><div class="actrow"><button id="backup" class="btn">バックアップ（JSON）</button><button id="restore" class="btn">バックアップを復元</button><button id="reset" class="btn warn">この月を空にする</button></div><p class="footnote">共有中はFirebaseのクラウドに保存。バックアップはクラウド上の全月データから作成できるよ。ログインが必要。</p></section>
+</main>
+<dialog id="refDialog"><form id="refForm" method="dialog"><h2 id="refDialogTitle">仕事・私用を登録</h2>
+ <label for="rdate">日付</label><input id="rdate" class="field" type="date" required>
+ <label for="rcat">予定の種類</label><select id="rcat" class="field"><option value="hwork">🩷 はちの仕事</option><option value="cwork">💙 Charantyの仕事</option><option value="hprivate">🌷 はちの私用</option><option value="cprivate">🎮 Charantyの私用</option><option value="shared">💚 2人の共通予定</option></select>
+ <label for="rtitle">内容</label><input id="rtitle" class="field" type="text" maxlength="75" required placeholder="例：在宅勤務、日本橋、休日、お出かけ">
+ <label for="rtime">開始時間（任意）</label><input id="rtime" class="field" type="time">
+ <div class="formactions"><button id="refCancel" type="button" class="btn">キャンセル</button><button type="submit" class="btn primary">保存する</button></div>
+ <button type="button" id="refDelete" class="btn sm warn hide" style="margin-top:11px">この予定を削除</button></form></dialog>
+<dialog id="eventDialog"><form id="eventForm" method="dialog"><h2 id="eventDialogTitle">配信を追加</h2><label for="edate">日付</label><input required class="field" id="edate" type="date"><div class="formgrid"><div><label for="ewho">誰が配信？</label><select class="field" id="ewho"><option value="hachi">🌷 はち</option><option value="char">🎮 Charanty</option><option value="pair">💜 2人</option></select></div><div><label for="etime">開始時間</label><input required class="field" type="time" id="etime" value="16:00"></div></div><label for="egame">ゲーム・メモ（任意）</label><input class="field" id="egame" maxlength="100" placeholder="例：APEX、マイクラ、雑談"><div class="formactions"><button type="button" class="btn" id="eventCancel">キャンセル</button><button type="submit" class="btn primary">保存する</button></div><button type="button" id="reallyDelete" class="btn sm warn hide" style="margin-top:11px">この枠を完全に削除</button></form></dialog>
+<dialog id="pasteDialog"><h2>📋 今月の予定を一括で取り込む</h2><p class="dialog-note">ここで作った「配信・2人の勤務・私用・共通予定」を<strong>まとめて1回で貼り付け</strong>できるよ。取り込み先：<strong id="pasteMonth"></strong>。個人表示中でも全員分を登録できる。</p><textarea id="pasteText" class="field" placeholder="1日 | はち仕事 | 12:30 | 出勤&#10;1日 | Charanty仕事 | | 在宅勤務&#10;1日 | 配信 | 19:00 | Charanty | APEX&#10;2日 | 共通 | | お出かけ"></textarea>
+ <details class="details" open><summary>この形式で貼り付けてね（例）</summary><div class="example">1日 | はち仕事 | 12:30 | 出勤<br>1日 | Charanty仕事 | | 在宅勤務<br>1日 | 配信 | 19:00 | Charanty | APEX<br>2日 | はち私用 | | 病院<br>2日 | Charanty私用 | 18:00 | 用事<br>3日 | 共通 | | お出かけ<br>4日 | 配信 | 16:00 | はち<br>4日 | 配信 | 21:00 | 2人<br>5日 | 休配信 | | 2人ともお休み</div><p class="dialog-note">日付は「1日」「2026-12-01」のどちらでもOK。従来の「5日(木) 🌷 16:00〜 / 💜 21:00〜」形式も使えるよ。各項目は <strong>|（縦棒）</strong> で区切ってね。</p></details>
+ <label class="togglebutton"><input id="replaceMonth" type="checkbox" checked> 今月の同じ種類の予定を入れ替える</label><p class="dialog-note">チェックあり：配信行を貼ったら配信を、仕事・私用行を貼ったら仕事・私用を、その月だけ入れ替える。チェックなしなら追記（重複防止あり）。</p><div class="importres" id="parsePreview"></div>
+ <div class="formactions"><button type="button" class="btn" id="pasteCancel">キャンセル</button><button type="button" class="btn primary" id="pasteApply">取り込む</button></div></dialog>
+<dialog id="dayDialog"><h2 id="dayDialogTitle"></h2><div id="dayDialogEvents" class="modal-list"></div><div class="formactions"><button type="button" class="btn" id="dayClose">閉じる</button><button type="button" class="btn" id="dayRefAdd">＋ 仕事・私用</button><button type="button" class="btn primary" id="dayAdd">＋ 配信</button></div></dialog>
+<dialog id="copyDialog"><h2 id="copyDialogTitle">📋 配信予定をコピー</h2><p class="copy-help">自動コピーが使えない場合は、下の文章を長押ししてコピーしてね。</p><textarea id="copyPreview" class="field copy-prompt" readonly aria-label="配信予定のコピー用テキスト"></textarea><div class="formactions"><button type="button" class="btn" id="copyDialogClose">閉じる</button><button type="button" class="btn primary" id="copySelect">文章を選択</button></div></dialog>
+<input type="file" id="backupInput" accept=".json,application/json" hidden>
+<div id="toast" role="status" class="toast hide"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="hachi-config.js"></script>
+<script>
+'use strict';
+(function(){
+const STORAGE='hachi_shared_stream_v1',WHO={hachi:{label:'🌷 はち',code:'🌷',name:'はち',color:'#ff87b5'},char:{label:'🎮 Charanty',code:'🎮',name:'Charanty',color:'#7de3d8'},pair:{label:'💜 2人',code:'💜',name:'2人',color:'#bca4ff'}};
+const $=id=>document.getElementById(id),clone=o=>JSON.parse(JSON.stringify(o)),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+let toastTimer,seq=0,month='2026-11',filter='keep',view='calendar',audience='all',editId=null,refEditId=null,daySelected=1,showRefs=false;const refKinds={hwork:'🩷 はち仕事',cwork:'💙 Charanty仕事',hprivate:'🌷 はち私用',cprivate:'🎮 Charanty私用',shared:'💚 共通'};let visibleRefs=new Set(Object.keys(refKinds));
+function seed(){return {months:{},references:{}}}
+function referenceSeed(){return {}}
+function ensureReferences(){if(!state.references||typeof state.references!=='object'||Array.isArray(state.references))state.references=referenceSeed();}
+function refsFor(m=month){return state.references?.[m]||[]}
+function editableRefs(){ensureReferences();if(!state.references[month])state.references[month]=[];return state.references[month]}
+function refInAudience(r){return audience==='all'||r.cat==='shared'||(audience==='hachi'&&(r.cat==='hwork'||r.cat==='hprivate'))||(audience==='char'&&(r.cat==='cwork'||r.cat==='cprivate'))}
+function eventInAudience(e){return audience==='all'||e.who===audience||e.who==='pair'}
+function shownRefs(day){return showRefs?refsFor().filter(r=>r.day===day&&visibleRefs.has(r.cat)&&refInAudience(r)):[]}
+function referenceLabel(r){return `${refKinds[r.cat]||'予定'}：${r.time?r.time+'〜 ':''}${r.title}`}
+function referenceHTML(day){const refs=shownRefs(day);if(!refs.length)return '';
+ return `<div class="refs">${refs.map(r=>`<span class="ref-item ref-${r.cat}">${esc(referenceLabel(r))}<button type="button" data-action="editRef" data-id="${esc(r.id)}" aria-label="${esc(referenceLabel(r))}を編集">✎</button></span>`).join('')}</div>`}
+function conflictReasons(day){const evs=getMonth().events.filter(e=>e.day===day&&!e.cut);if(!evs.length)return [];
+ const refs=refsFor().filter(r=>r.day===day),w=refs.filter(r=>r.cat==='hwork'),c=refs.filter(r=>r.cat==='cwork'),reasons=[];
+ if(refs.some(r=>r.cat==='shared'))reasons.push('共通予定あり');
+ if(w.some(r=>r.time==='12:30')&&evs.some(e=>e.who==='hachi'||e.who==='pair'))reasons.push('はち12:30出勤');
+ if(w.some(r=>r.time==='09:30')&&evs.some(e=>(e.who==='hachi'||e.who==='pair')&&e.time<'21:00'))reasons.push('はち9:30出勤');
+ if(c.some(r=>r.title==='日本橋'||r.title==='外勤務'||r.title==='出勤')&&evs.some(e=>e.who==='char'||e.who==='pair'))reasons.push('Charanty外勤務');
+ if(refs.some(r=>r.cat==='hprivate')&&evs.some(e=>e.who==='hachi'||e.who==='pair'))reasons.push('はちの私用あり');
+ if(refs.some(r=>r.cat==='cprivate')&&evs.some(e=>e.who==='char'||e.who==='pair'))reasons.push('Charantyの私用あり');
+ return reasons;
+}
+function warningHTML(day){const reasons=conflictReasons(day);return showRefs&&reasons.length?`<div class="ref-warning">⚠️ 要確認：${esc(reasons.join('・'))}</div>`:''}
+function validData(s){if(!s||typeof s!=='object'||typeof s.months!=='object'||Array.isArray(s.months))return false;for(const [key,obj]of Object.entries(s.months)){if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(key)||!obj||!Array.isArray(obj.events))return false;for(const e of obj.events){if(!e||!Number.isInteger(e.day)||e.day<1||e.day>31||!WHO[e.who]||!/^\d{2}:\d{2}$/.test(e.time)||typeof e.id!=='string')return false}}if(s.references!==undefined){if(!s.references||typeof s.references!=='object')return false;for(const [k,refs]of Object.entries(s.references)){if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(k)||!Array.isArray(refs))return false;for(const r of refs){if(!r||!Number.isInteger(r.day)||r.day<1||r.day>31||!refKinds[r.cat]||typeof r.title!=='string'||typeof r.id!=='string')return false}}}return true}
+let state=seed(),undo=[],redo=[],persistOK=true,pendingBase=null;
+// 仕事・プライベートを端末に保存しない（クラウドが正本）。画面表示設定だけ端末保存。
+try{const raw=localStorage.getItem(STORAGE);if(raw){const parsed=JSON.parse(raw);
+ if(typeof parsed.activeMonth==='string'&&/^\d{4}-(0[1-9]|1[0-2])$/.test(parsed.activeMonth))month=parsed.activeMonth;
+ if(['all','hachi','char'].includes(parsed.audience))audience=parsed.audience;
+ if(['calendar','list'].includes(parsed.view))view=parsed.view;
+}}catch(err){console.warn('Preference read failed',err);persistOK=false}
+ensureReferences();
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify({activeMonth:month,audience,view}));persistOK=true}catch(err){console.warn('Preference save failed',err);persistOK=false}}
+function notify(msg){const el=$('toast');el.textContent=msg;el.classList.remove('hide');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add('hide'),3200)}
+function recordChange(){pendingBase=clone(state);undo.push(clone(state));if(undo.length>30)undo.shift();redo=[]}
+function commit(){
+ const previous=pendingBase||clone(state);pendingBase=null;
+ if(!cloudReady){state=previous;undo=[];redo=[];persist();render();notify('未接続のため変更は保存していないよ。先に共有ログインを確認してね。');return}
+ const patches=makePatches(previous,state);
+ persist();render();
+ if(patches.length)enqueuePatches(patches);
+}
+function getMonth(m=month){return state.months[m]||{events:[],notes:{}}}
+function editableMonth(){if(!state.months[month])state.months[month]={events:[],notes:{}};return state.months[month]}
+function dateMonth(m=month){const [y,mo]=m.split('-').map(Number);return {y,mo,days:new Date(y,mo,0).getDate(),offset:new Date(y,mo-1,1).getDay()}}
+function monthLabel(){const {y,mo}=dateMonth();return y+'年'+mo+'月'}
+function dow(day){const{y,mo}=dateMonth();return ['日','月','火','水','木','金','土'][new Date(y,mo-1,day).getDay()]}
+function sortedEvents(arr){return [...arr].sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time)||a.who.localeCompare(b.who))}
+function render(){const {events}=getMonth(),kept=events.filter(e=>!e.cut);$('monthTitle').innerHTML=monthLabel()+'<small>MONTHLY STREAM PLANNER</small>';
+$('countAll').textContent=kept.length;for(const [id,who]of [['countHachi','hachi'],['countChar','char'],['countPair','pair']])$(id).textContent=kept.filter(e=>e.who===who).length;
+ $('copyHachiCount').textContent=kept.filter(e=>e.who==='hachi'||e.who==='pair').length+'枠';$('copyCharCount').textContent=kept.filter(e=>e.who==='char'||e.who==='pair').length+'枠';
+$('undo').disabled=undo.length===0;$('redo').disabled=redo.length===0;
+document.querySelectorAll('.audience-btn').forEach(el=>{el.classList.toggle('active',el.dataset.audience===audience);el.setAttribute('aria-pressed',String(el.dataset.audience===audience))});document.querySelectorAll('.filter').forEach(el=>{el.classList.toggle('active',el.dataset.filter===filter);el.setAttribute('aria-pressed',String(el.dataset.filter===filter))});document.querySelectorAll('.view').forEach(el=>{el.classList.toggle('active',el.dataset.view===view);el.setAttribute('aria-pressed',String(el.dataset.view===view))});
+const names={keep:'残す予定',cut:'見送った枠',all:'すべての候補'};$('sectionTitle').textContent=(audience==='hachi'?'🌷 はちの ':audience==='char'?'🎮 Charantyの ':'')+names[filter];$('sectionHint').textContent=events.filter(e=>!e.cut&&eventInAudience(e)).length+'枠残す / '+events.filter(e=>e.cut&&eventInAudience(e)).length+'枠見送り';
+$('refPanel').classList.toggle('hide',!showRefs);$('refToggle').textContent=showRefs?'🙈 仕事・私用を隠す':'👀 仕事・私用も見る';$('refToggle').setAttribute('aria-expanded',String(showRefs));
+if(view==='calendar')renderCalendar();else renderList();$('reset').textContent=month==='2026-11'?'この月を空にする':'この月を空にする';}
+function eventHTML(e){return `<div class="event ${e.cut?'cut':''}" data-id="${esc(e.id)}"><div class="evmain"><strong class="who ${e.who}">${WHO[e.who].label}</strong><span class="when">${esc(e.time)}〜${e.cut?'　· 見送り':''}</span>${e.memo?`<div class="game">${esc(e.memo)}</div>`:''}</div><div class="evbuttons"><button class="btn sm ${e.cut?'keep':'skip'}" data-action="toggle" data-id="${esc(e.id)}">${e.cut?'↶ 戻す':'✂ 見送る'}</button><button class="btn sm" data-action="edit" data-id="${esc(e.id)}">編集</button></div></div>`}
+function renderList(){const container=$('eventsContainer');container.innerHTML='';const events=sortedEvents(getMonth().events.filter(e=>eventInAudience(e)&&(filter==='all'||(filter==='cut'?e.cut:!e.cut))));
+ const groups=new Map();for(const e of events){if(!groups.has(e.day))groups.set(e.day,[]);groups.get(e.day).push(e)}
+ if(showRefs)for(const r of refsFor().filter(r=>visibleRefs.has(r.cat)&&refInAudience(r))){if(!groups.has(r.day))groups.set(r.day,[])}
+ if(!groups.size){container.innerHTML='<div class="empty">'+(filter==='cut'?'まだ見送った配信はないよ ✨':'この月の配信予定はまだないよ。<br>「＋ 配信を追加」か「予定を貼る」で登録してね。')+'</div>';return}
+ for(const day of [...groups.keys()].sort((a,b)=>a-b)){const entries=groups.get(day),x=document.createElement('div');x.className='daycard';x.innerHTML=`<div class="dayhead"><span class="daynum">${day}日 <span class="weekday ${dow(day)==='日'?'sun':dow(day)==='土'?'sat':''}">(${dow(day)})</span></span><button class="btn sm" data-action="addday" data-day="${day}">＋ 配信</button></div>${referenceHTML(day)}${warningHTML(day)}${entries.map(eventHTML).join('')}`;container.appendChild(x)}
+}
+function renderCalendar(){const container=$('eventsContainer');const {days,offset}=dateMonth(),mo=getMonth();let markup='<div class="calendar">';for(const w of ['日','月','火','水','木','金','土'])markup+=`<div class="calhead">${w}</div>`;for(let i=0;i<offset;i++)markup+='<div class="calday blank"></div>';for(let day=1;day<=days;day++){const list=sortedEvents(mo.events.filter(e=>e.day===day&&eventInAudience(e)&&(filter==='all'||(filter==='cut'?e.cut:!e.cut))));const d=dow(day),rr=shownRefs(day),warn=showRefs&&conflictReasons(day).length;
+ markup+=`<button class="calday ${warn?'conflict':''}" data-action="day" data-day="${day}" aria-label="${day}日の予定を確認"><span class="date ${d==='日'?'sun':d==='土'?'sat':''}">${day}${warn?' ⚠️':''}</span>${list.map(e=>`<span class="chip ${e.who} ${e.cut?'cut':''}">${esc(e.time.slice(0,2).replace(/^0/,''))}時 ${WHO[e.who].code}</span>`).join('')}${rr.map(r=>`<span class="ref-mini ref-${r.cat}">${esc(r.cat==='hwork'?'はち':r.cat==='cwork'?'Char':r.cat==='shared'?'共通':r.cat==='hprivate'?'はち私用':'Char私用')} ${esc(r.time||r.title)}</span>`).join('')}${mo.notes?.[day]&&!rr.some(r=>r.cat==='shared')?`<span class="chip off">💤 ${esc(day===19?'共通予定':'休み')}</span>`:''}</button>`}markup+='</div><p class="cal-info">日付をタップすると、配信や仕事・私用を確認・変更できるよ。</p>';container.innerHTML=markup}
+function findEvent(id){return editableMonth().events.find(e=>e.id===id)}
+function newId(){seq+=1;return 'e'+Date.now().toString(36)+'_'+seq+'_'+Math.random().toString(36).slice(2,6)}
+function changeMonth(delta){let [y,m]=month.split('-').map(Number);m+=delta;if(m<1){y--;m=12}if(m>12){y++;m=1}month=y+'-'+pad(m);filter='keep';persist();render();listenMonth()}
+function toggle(id){const e=getMonth().events.find(x=>x.id===id);if(!e)return;recordChange();e.cut=!e.cut;commit();notify(e.cut?'見送りに移動したよ。戻すこともできる！':'配信予定に戻したよ 🌷')}
+function editEvent(id,day){editId=id||null;const e=id?getMonth().events.find(x=>x.id===id):null;if(id&&!e)return;$('eventDialogTitle').textContent=e?'配信を編集':'配信を追加';$('edate').value=month+'-'+pad(e?e.day:(day||1));$('ewho').value=e?e.who:'hachi';$('etime').value=e?e.time:'16:00';$('egame').value=e?e.memo:'';$('reallyDelete').classList.toggle('hide',!e);$('eventDialog').showModal()}
+function closeDialog(id){$(id).close()}
+function editReference(id=null,day=1){refEditId=id;const r=id?refsFor().find(x=>x.id===id):null;if(id&&!r)return;
+ $('refDialogTitle').textContent=r?'仕事・私用を編集':'仕事・私用を登録';$('rdate').value=month+'-'+pad(r?.day||day);
+ $('rcat').value=r?.cat||'hwork';$('rtitle').value=r?.title||'';$('rtime').value=r?.time||'';$('refDelete').classList.toggle('hide',!r);$('refDialog').showModal();}
+function removeReference(id){recordChange();state.references[month]=editableRefs().filter(r=>r.id!==id);commit();notify('仕事・私用の予定を削除したよ')}
+
+function listDay(day){daySelected=day;$('dayDialogTitle').textContent=monthLabel()+' '+day+'日('+dow(day)+')';const mo=getMonth(),evs=sortedEvents(mo.events.filter(e=>e.day===day&&eventInAudience(e))),refs=shownRefs(day);
+ $('dayDialogEvents').innerHTML=(mo.notes?.[day]?`<p class="dialog-note">📌 ${esc(mo.notes[day])}</p>`:'')+referenceHTML(day)+warningHTML(day)+(evs.length?evs.map(e=>`<div class="modal-event"><span class="lab ${e.who}">${WHO[e.who].label}<br><span class="smallmuted">${esc(e.time)}〜 ${e.cut?'（見送り）':''}</span></span><button class="btn sm ${e.cut?'keep':'skip'}" data-action="toggle" data-id="${esc(e.id)}">${e.cut?'戻す':'見送る'}</button><button class="btn sm" data-action="edit" data-id="${esc(e.id)}">編集</button></div>`).join(''):'<p class="dialog-note">この日の配信はまだないよ。</p>');$('dayDialog').showModal()}
+function parseRows(textInput){const text=String(textInput).replace(/\r/g,'').replace(/〜/g,'~').replace(/[～]/g,'~');const entries=[],notes={};const max=dateMonth().days;for(const original of text.split('\n')){let line=original.trim();if(!line||/^[-| :]+$/.test(line))continue;
+line=line.replace(/^[\s|*#-]+/,'').replace(/\|\s*$/,'').trim();
+// Supports 5日(木), 11/5, 2026/11/5 and a leading bare day ("5 16:00 2人").
+let dMatch=line.match(/^(?:(\d{4})[年/.-])?(?:(\d{1,2})[月/.-])?(\d{1,2})日?(?:\s*\([日月火水木金土](?:・祝)?\))?(?=\s|\||🎮|🌷|💜|💤|\d{1,2}:\d{2}|$)/);
+if(!dMatch)continue;
+let day=Number(dMatch[3]);if(day<1||day>max)continue;let mm=dMatch[2]?Number(dMatch[2]):null,yy=dMatch[1]?Number(dMatch[1]):null;const cur=dateMonth();if((mm&&mm!==cur.mo)||(yy&&yy!==cur.y))continue;
+let rest=line.slice(dMatch[0].length).replace(/^\s*\|?\s*/,'').replace(/\|/g,' ').trim();rest=rest.replace(/(\d{1,2})時(?:(\d{1,2})分)?/g,(_,h,m)=>pad(Number(h))+':'+pad(Number(m||0)));
+if(/(?:💤|お休み|配信休み|休配信|休止)/.test(rest)&&!/\d{1,2}:\d{2}/.test(rest)){notes[day]=rest.replace(/^💤\s*/,'').trim()||'配信休み';continue}
+const parts=rest.split(/\s*\/(?=\s*(?:🌷|🎮|💜|\d{1,2}:\d{2}))/).map(s=>s.trim()).filter(Boolean);
+for(const part of parts){const matches=[...part.matchAll(/\b([01]?\d|2[0-3]):([0-5]\d)/g)];for(const mt of matches){let first=part.slice(0,mt.index).trim(),last=part.slice(mt.index+mt[0].length).trim();let who=null;const surrounding=first+' '+last;if(/💜|2人|ふたり|一緒|コラボ/.test(surrounding))who='pair';else if(/🌷|はち|Hachi/i.test(surrounding))who='hachi';else if(/🎮|Charanty|ちゃらんてぃ|チャランティ/i.test(surrounding))who='char';if(who){const time=pad(Number(mt[1]))+':'+mt[2];if(!entries.some(e=>e.day===day&&e.time===time&&e.who===who))entries.push({day,time,who})}}}
+}
+return {entries,notes}}
+// 仕事・共通予定・配信予定をまとめて取り込む。従来の配信一覧形式とも互換。
+const categoryAliases={
+ 'hwork':'hwork','はち仕事':'hwork','はちの仕事':'hwork','はち出勤':'hwork',
+ 'cwork':'cwork','charanty仕事':'cwork','charantyの仕事':'cwork','Charanty仕事':'cwork','Charantyの仕事':'cwork','チャランティ仕事':'cwork',
+ 'hprivate':'hprivate','はち私用':'hprivate','はちの私用':'hprivate','はちプライベート':'hprivate',
+ 'cprivate':'cprivate','charanty私用':'cprivate','charantyの私用':'cprivate','Charanty私用':'cprivate','Charantyの私用':'cprivate',
+ 'shared':'shared','共通':'shared','共通予定':'shared','2人の予定':'shared','2人共通':'shared','二人の予定':'shared',
+ 'stream':'stream','配信':'stream','配信予定':'stream',
+ 'off':'off','休配信':'off','お休み':'off','配信休み':'off'
+};
+function decodeDay(input){const str=input.trim(),m1=str.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/),m2=str.match(/^(\d{1,2})日?(?:\([日月火水木金土](?:・祝)?\))?$/);
+ const day=m1?Number(m1[3]):m2?Number(m2[1]):NaN;
+ if(m1&&(Number(m1[1])!==dateMonth().y||Number(m1[2])!==dateMonth().mo))return null;
+ return Number.isInteger(day)&&day>=1&&day<=dateMonth().days?day:null;
+}
+function whoFrom(value){const v=String(value).trim();if(/^(pair|2人|ふたり|二人|💜|コラボ)$/.test(v))return 'pair';if(/^(hachi|はち|🌷)$/i.test(v))return 'hachi';if(/^(char|charanty|🎮|チャランティ)$/i.test(v))return 'char';return null}
+function parseAllRows(input){const stream=[],refs=[],notes={},remaining=[],failed=[];
+ for(const raw of String(input).replace(/\r/g,'').split('\n')){
+  const line=raw.trim();if(!line||/^[-| :]+$/.test(line)||/^(日付|date)\s*[|｜]/i.test(line))continue;
+  const parts=line.split(/[|｜]/).map(t=>t.trim());
+  // CSVの代わりにシンプルな縦棒区切りを採用。日付が異なる月の場合は取り込まない。
+  const cat=parts.length>=4?categoryAliases[parts[1]]||categoryAliases[parts[1].toLowerCase()]:null;
+  if(!cat){remaining.push(line);continue}
+  const day=decodeDay(parts[0]);if(day===null){failed.push(line);continue}
+  const time=parts[2]||'',label=parts.slice(3).join(' | ').trim();
+  if(cat==='stream'){
+   const who=whoFrom(parts[3]),memo=parts.slice(4).join(' | ').trim();
+   if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)||!who){failed.push(line);continue}
+   if(!stream.some(e=>e.day===day&&e.who===who&&e.time===time))stream.push({day,who,time,memo});
+  }else if(cat==='off'){
+   notes[day]=label||'配信休み';
+  }else{
+   if(time&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)){failed.push(line);continue}
+   if(!label){failed.push(line);continue}
+   if(!refs.some(r=>r.day===day&&r.cat===cat&&r.time===time&&r.title===label))refs.push({day,cat,time,title:label});
+  }
+ }
+ // 古い配信表を直接貼り付ける操作を維持。
+ const old=parseRows(remaining.join('\n'));
+ for(const e of old.entries)if(!stream.some(x=>x.day===e.day&&x.who===e.who&&x.time===e.time))stream.push({...e,memo:''});
+ Object.assign(notes,old.notes);
+ for(const line of remaining){const t=parseRows(line);if(!t.entries.length&&!Object.keys(t.notes).length){if(!/^\|?\s*日付|^[-:| ]+$/.test(line))failed.push(line)}}
+ return {stream,refs,notes,failed};
+}
+function pastePreview(){const p=parseAllRows($('pasteText').value);$('parsePreview').textContent=`読み取り：配信 ${p.stream.length}枠／仕事・私用 ${p.refs.length}件／休みメモ ${Object.keys(p.notes).length}日${p.failed.length?'／⚠️ 未対応 '+p.failed.length+'行':''}`}
+function openPaste(){$('pasteMonth').textContent=monthLabel();$('parsePreview').textContent='';$('pasteText').value='';$('replaceMonth').checked=true;$('pasteDialog').showModal()}
+function applyPaste(){const data=parseAllRows($('pasteText').value),hasStreams=!!(data.stream.length||Object.keys(data.notes).length),hasRefs=!!data.refs.length;
+ if(!hasStreams&&!hasRefs){notify('予定を読み取れなかったよ。形式を確認してね。');return}
+ if(data.failed.length&&!confirm('読み取れない行が '+data.failed.length+' 件あるよ。無視して取り込む？\n\n'+data.failed.slice(0,3).join('\n')))return;
+ const replace=$('replaceMonth').checked,existing=getMonth(),oldRefs=refsFor();
+ const targets=[hasStreams?'配信':'',hasRefs?'仕事・私用・共通予定':''].filter(Boolean).join('／');
+ if(replace&&((hasStreams&&existing.events.length)||(hasRefs&&oldRefs.length))&&!confirm(monthLabel()+'の『'+targets+'』を貼り付けた内容に入れ替える？\nこの月だけを変更するよ。保存前にバックアップ推奨。'))return;
+ recordChange();let added=0;
+ if(hasStreams){const mo=editableMonth();if(replace){mo.events=[];mo.notes={}}for(const e of data.stream){if(mo.events.some(x=>x.day===e.day&&x.who===e.who&&x.time===e.time))continue;mo.events.push({...e,id:newId(),cut:false});added++}mo.notes={...(mo.notes||{}),...data.notes}}
+ if(hasRefs){const rr=editableRefs();if(replace)rr.length=0;for(const r of data.refs){if(rr.some(x=>x.day===r.day&&x.cat===r.cat&&x.time===r.time&&x.title===r.title))continue;rr.push({...r,id:newId()});added++}}
+ closeDialog('pasteDialog');filter='keep';commit();notify(added+'件を取り込んだよ！');
+}
+function doUndo(){if(!undo.length)return;pendingBase=clone(state);redo.push(clone(state));state=undo.pop();ensureReferences();commit();notify('1つ前の操作を戻したよ')}
+function doRedo(){if(!redo.length)return;pendingBase=clone(state);undo.push(clone(state));state=redo.pop();ensureReferences();commit();notify('やり直したよ')}
+function getSelectedEvents(audience='all'){
+ return sortedEvents(getMonth().events.filter(e=>!e.cut&&(audience==='all'||e.who===audience||e.who==='pair')))
+}
+function getText(audience='all'){
+ const whoTitle=audience==='hachi'?'はちの':audience==='char'?'Charantyの':'';
+ const events=getSelectedEvents(audience);
+ let out='【'+monthLabel()+' '+whoTitle+'配信予定】\n';
+ for(const e of events){
+   const label=e.who==='pair'?'💜 2人配信':e.who==='hachi'?'🌷 はちソロ':'🎮 Charantyソロ';
+   out+=`${pad(e.day)}日(${dow(e.day)}) ${e.time}〜 ${label}${e.memo?'｜'+e.memo:''}\n`;
+ }
+ return out+(events.length?'':'（配信予定なし）\n');
+}
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function openCopyFallback(t,audience){
+ $('copyDialogTitle').textContent=audience==='hachi'?'🌷 はち用の配信予定':audience==='char'?'🎮 Charanty用の配信予定':'📋 全配信予定';
+ $('copyPreview').value=t;
+ $('copyDialog').showModal();
+ $('copyPreview').focus();$('copyPreview').select();
+}
+async function copyText(audience='all'){
+ const t=getText(audience);
+ const display=audience==='hachi'?'はち用':audience==='char'?'Charanty用':'全配信';
+ // AndroidのローカルHTML等でClipboard APIが使えない場合にも対応。
+ try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(t);notify(display+'の予定をコピーしたよ 📋');return}}catch(err){}
+ try{
+  const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:0;top:0;opacity:0;';document.body.appendChild(ta);ta.focus();ta.select();
+  const success=document.execCommand('copy');ta.remove();if(success){notify(display+'の予定をコピーしたよ 📋');return}
+ }catch(err){}
+ openCopyFallback(t,audience);notify('コピーが制限されたので、文章を長押ししてコピーしてね');
+}
+function outputCSV(){const lines=[['日付','開始','配信者','ゲーム・メモ']];for(const e of sortedEvents(getMonth().events.filter(e=>!e.cut)))lines.push([month+'-'+pad(e.day),e.time,WHO[e.who].name,e.memo||'']);const csv='\ufeff'+lines.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}),month+'_配信予定.csv');notify('CSVを保存したよ')}
+function wrapLines(ctx,str,maxWidth){let out=[],line='';for(const ch of [...str]){if(ctx.measureText(line+ch).width>maxWidth&&line){out.push(line);line=ch}else line+=ch}if(line)out.push(line);return out}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.closePath()}
+function fitText(ctx,text,maxWidth){let s=String(text);if(ctx.measureText(s).width<=maxWidth)return s;while(s.length>2&&ctx.measureText(s+'…').width>maxWidth)s=s.slice(0,-1);return s+'…'}
+async function outputImage(){
+ const {days,offset}=dateMonth(),events=sortedEvents(getMonth().events.filter(e=>!e.cut&&eventInAudience(e)));
+ const kinds=audience==='hachi'?'はち':audience==='char'?'Charanty':'全員';
+ const imageRefs=$('imageWithRefs').checked?refsFor().filter(r=>visibleRefs.has(r.cat)&&refInAudience(r)):[];
+ if(!events.length&&!imageRefs.length){notify('画像にする予定がないよ');return}
+ const W=1760,margin=42,gap=10,col=(W-margin*2-gap*6)/7;
+ const weeks=Math.ceil((offset+days)/7),weekMax=[];
+ for(let w=0;w<weeks;w++){let max=0;for(let c=0;c<7;c++){let day=w*7+c-offset+1;if(day<1||day>days)continue;
+ let ecount=events.filter(e=>e.day===day).length,rcount=imageRefs.filter(r=>r.day===day).length;
+ max=Math.max(max,ecount+rcount)}weekMax.push(Math.max(166,Math.min(290,76+max*38)))}
+ const header=252,footer=95,weekGap=11,H=header+weekMax.reduce((a,b)=>a+b,0)+weekGap*(weeks-1)+footer;
+ const cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');if(!c){notify('この端末では画像化できなかったよ');return}
+ c.fillStyle='#101423';c.fillRect(0,0,W,H);c.fillStyle='#2c2946';c.fillRect(0,0,W,174);
+ c.fillStyle='#f9b4cf';c.font='700 29px sans-serif';c.fillText('HACHI × CHARANTY  /  STREAM CALENDAR',margin,58);
+ c.fillStyle='#fff';c.font='800 58px sans-serif';c.fillText(monthLabel()+'  '+kinds+'の配信予定',margin,135);
+ c.fillStyle='#c8c7dc';c.font='25px sans-serif';c.fillText('配信 '+events.length+'枠'+(imageRefs.length?'　・　仕事 / 私用 '+imageRefs.length+'件':''),margin,213);
+ const weekDays=['日','月','火','水','木','金','土'];c.textAlign='center';c.font='700 27px sans-serif';
+ weekDays.forEach((w,i)=>{c.fillStyle=i===0?'#f7a9b9':i===6?'#88b9f6':'#d5d5e5';c.fillText(w,margin+i*(col+gap)+col/2,243)});c.textAlign='left';
+ let y=header;
+ const refColor={hwork:'#613d52',cwork:'#305260',hprivate:'#57483e',cprivate:'#345360',shared:'#31533c'};
+ const code={hwork:'はち仕事',cwork:'Char仕事',hprivate:'はち私用',cprivate:'Char私用',shared:'共通'};
+ for(let w=0;w<weeks;w++){
+   let rowHeight=weekMax[w];
+   for(let d=0;d<7;d++){
+     let day=w*7+d-offset+1,x=margin+d*(col+gap);
+     if(day<1||day>days){c.fillStyle='#171a2c';roundRect(c,x,y,col,rowHeight,15);c.fill();continue}
+     c.fillStyle='#23273a';roundRect(c,x,y,col,rowHeight,15);c.fill();
+     c.fillStyle=d===0?'#ffafb9':d===6?'#9dc6ff':'#f4f2fa';c.font='800 30px sans-serif';c.fillText(String(day),x+14,y+38);
+     let yy=y+49;
+     const todayE=events.filter(e=>e.day===day),todayR=imageRefs.filter(r=>r.day===day);
+     for(const e of todayE){const fg=WHO[e.who].color,bg=e.who==='hachi'?'#55334e':e.who==='char'?'#254951':'#443758';
+       c.fillStyle=bg;roundRect(c,x+8,yy,col-16,33,7);c.fill();c.fillStyle=fg;c.font='700 22px sans-serif';c.fillText(fitText(c,`${e.time} ${WHO[e.who].name}`,col-28),x+13,yy+23);yy+=38;
+     }
+     for(const r of todayR){c.fillStyle=refColor[r.cat];roundRect(c,x+8,yy,col-16,33,7);c.fill();c.fillStyle='#e3e2ec';c.font='700 19px sans-serif';c.fillText(fitText(c,`${code[r.cat]} ${r.time||''} ${r.title}`,col-28),x+12,yy+22);yy+=38}
+   }
+   y+=rowHeight+weekGap;
+ }
+ c.fillStyle='#b7b6c9';c.font='22px sans-serif';c.fillText('※ 断捨離後の「残す」予定のみ。予定は変更になる場合があります。',margin,H-40);
+ cv.toBlob(blob=>{if(!blob){notify('画像生成に失敗したよ');return}downloadBlob(blob,month+'_'+kinds+'_月間配信カレンダー.png');notify(kinds+'の月間カレンダー画像を保存したよ 🗓️')},'image/png');
+}
+async function backup(){
+ if(!cloudReady||!cloudDb){notify('共有に接続してからバックアップしてね');return}
+ try{
+  const result=await cloudDb.collection('sharedMonths').get({source:'server'});
+  const all={months:{},references:{}};
+  result.forEach(doc=>{if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(doc.id))return;const v=doc.data();all.months[doc.id]={events:v.events||[],notes:v.notes||{}};all.references[doc.id]=v.references||[]});
+  const json={format:'hachi-stream-prune',version:1,savedAt:new Date().toISOString(),activeMonth:month,data:all};
+  downloadBlob(new Blob([JSON.stringify(json,null,2)],{type:'application/json'}),'配信断捨離_共有バックアップ_'+new Date().toISOString().slice(0,10)+'.json');notify('全月分をバックアップしたよ');
+ }catch(e){console.error(e);notify('バックアップ失敗：接続または権限を確認してね')}
+}
+function reset(){if(!confirm(monthLabel()+'の配信予定を空にする？ 見送った枠も対象だよ。仕事・私用は残すよ。'))return;
+ recordChange();state.months[month]={events:[],notes:{}};filter='keep';commit();notify('この月の配信予定を空にしたよ')}
+
+// ---- 2人共有: Firebase Auth + Firestore (無料 Spark で運用可能な構成) ----
+let cloudReady=false,cloudDb=null,cloudAuth=null,cloudUser=null,cloudUnsubscribe=null;
+let cloudListenSeq=0,cloudQueue=[],cloudProcessing=false,cloudFatal=false;
+function cloudStatus(label,detail,kind='wait'){
+ $('cloudState').textContent=label;$('cloudState').dataset.kind=kind;$('cloudDetail').textContent=detail;
+ $('cloudIdentity').textContent=cloudUser?.email||'';
+ $('cloudLogin').classList.toggle('hide',!!cloudUser);
+ $('cloudLogout').classList.toggle('hide',!cloudUser);
+}
+function mapById(items){return new Map((items||[]).map(x=>[x.id,x]))}
+function difference(before,after){
+ const a=mapById(before),b=mapById(after),ops={};
+ for(const [key,value] of b)if(!a.has(key)||JSON.stringify(a.get(key))!==JSON.stringify(value))ops[key]=value;
+ for(const key of a.keys())if(!b.has(key))ops[key]=null;
+ return ops;
+}
+function notesDifference(a={},b={}){const ops={};for(const k of new Set([...Object.keys(a),...Object.keys(b)]))if(a[k]!==b[k])ops[k]=Object.prototype.hasOwnProperty.call(b,k)?b[k]:null;return ops}
+function makePatches(before,after){
+ const keys=new Set([...Object.keys(before.months||{}),...Object.keys(after.months||{}),...Object.keys(before.references||{}),...Object.keys(after.references||{})]);
+ const changes=[];
+ for(const key of keys){const b=before.months?.[key]||{events:[],notes:{}},a=after.months?.[key]||{events:[],notes:{}};
+ const events=difference(b.events,a.events),references=difference(before.references?.[key],after.references?.[key]),notes=notesDifference(b.notes,a.notes);
+ if(Object.keys(events).length+Object.keys(references).length+Object.keys(notes).length)changes.push({key,events,references,notes});
+ }
+ return changes;
+}
+function mergeById(items,operations){const map=mapById(items);
+ for(const [id,v] of Object.entries(operations)){if(v===null)map.delete(id);else map.set(id,v)}
+ return [...map.values()];
+}
+function mergeDoc(obj,patch){
+ const notes={...(obj.notes||{})};for(const [day,v] of Object.entries(patch.notes)){if(v===null)delete notes[day];else notes[day]=v}
+ return {events:mergeById(obj.events||[],patch.events),notes,references:mergeById(obj.references||[],patch.references)};
+}
+function applyCloudMonth(key,v){
+ const evs=Array.isArray(v.events)?v.events:[],refs=Array.isArray(v.references)?v.references:[],notes=v.notes||{};
+ const normalized=arr=>JSON.stringify([...arr].sort((a,b)=>a.id.localeCompare(b.id)));
+ const same=normalized(state.months[key]?.events||[])===normalized(evs)
+  && normalized(state.references?.[key]||[])===normalized(refs)
+  && JSON.stringify(state.months[key]?.notes||{})===JSON.stringify(notes);
+ state.months[key]={events:evs,notes};ensureReferences();state.references[key]=refs;
+ // 自分の保存なら Undo を残し、他端末から変更が入った場合だけ古い履歴を破棄。
+ if(!same){undo=[];redo=[]}
+ persist();render();
+}
+function listenMonth(){
+ if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null}
+ const seq=++cloudListenSeq;cloudReady=false;
+ if(!cloudDb||!cloudUser||cloudFatal){render();return}
+ const target=month;
+ cloudStatus('読み込み中','共有カレンダーを取得しているよ。');
+ cloudUnsubscribe=cloudDb.collection('sharedMonths').doc(target).onSnapshot({includeMetadataChanges:true},snap=>{
+  if(seq!==cloudListenSeq||target!==month)return;
+  if(snap.metadata.fromCache){cloudReady=false;cloudStatus('オフライン','ネット接続を確認してね。同期できるまで編集は保存できないよ。','error');return}
+  cloudReady=true;
+  if(cloudProcessing||cloudQueue.length){cloudStatus('同期中','保存が終わるまで操作できるけど、通信が切れないようにしてね。');return}
+  const d=snap.exists?snap.data():{events:[],notes:{},references:[]};
+  applyCloudMonth(target,d);
+  cloudStatus('✅ 共有中','2人の変更が自動で反映されるよ。見送る・復活も共有される。','ok');
+ },error=>{
+  console.error('Firestore listener error:',error);cloudReady=false;cloudFatal=true;
+  cloudStatus('アクセスできません','Firestoreルールに2人のメールアドレスを設定したか確認してね。','error');
+ });
+}
+function enqueuePatches(patches){
+ if(!cloudReady||!cloudDb){notify('共有接続がないため変更を保存できなかったよ');return}
+ cloudQueue.push(...patches);
+ cloudStatus('同期中','共有カレンダーに変更を保存しているよ。');
+ void flushCloud();
+}
+async function flushCloud(){
+ if(cloudProcessing||!cloudDb||!cloudUser)return;
+ cloudProcessing=true;
+ try{
+  while(cloudQueue.length){
+   const patch=cloudQueue[0],ref=cloudDb.collection('sharedMonths').doc(patch.key);
+   await cloudDb.runTransaction(async txn=>{
+    const got=await txn.get(ref),current=got.exists?got.data():{events:[],notes:{},references:[]};
+    const merged=mergeDoc(current,patch);
+    txn.set(ref,{...merged,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:cloudUser.uid});
+   });
+   cloudQueue.shift();
+  }
+  cloudStatus('✅ 共有中','保存完了。2人の画面に反映されるよ。','ok');
+ }catch(err){
+  console.error('共有保存失敗',err);
+  cloudStatus('⚠️ 未保存','変更が同期できなかったよ。ネット接続・ログイン・権限を確認してね。','error');
+  notify('クラウドへの保存に失敗。画面を閉じずにバックアップや再接続を確認してね。');
+ }finally{
+  cloudProcessing=false;
+  // 成功した時だけサーバー正本を読み直す。失敗した変更を勝手に消さない。
+  if(cloudQueue.length===0 && cloudDb&&cloudUser){
+   try{const got=await cloudDb.collection('sharedMonths').doc(month).get({source:'server'});
+    if(!cloudProcessing&&!cloudQueue.length&&got.metadata.fromCache===false){applyCloudMonth(month,got.exists?got.data():{events:[],notes:{},references:[]});cloudReady=true;cloudStatus('✅ 共有中','最新の配信予定に同期したよ。','ok')}
+   }catch(e){console.warn('Refresh failed',e)}
+  }
+ }
+}
+function initCloud(){
+ const cfg=window.HACHI_FIREBASE_CONFIG;
+ if(!cfg||!cfg.apiKey||!cfg.projectId||String(cfg.apiKey).includes('ここに')){
+  cloudStatus('初期設定待ち','hachi-config.js にFirebaseの設定を入力して、公開URLを開いてね。','error');
+  $('cloudLogin').disabled=true;return;
+ }
+ if(!window.firebase?.apps||!window.firebase?.auth||!window.firebase?.firestore){
+  cloudStatus('通信エラー','Firebaseの読み込みに失敗。ネット接続を確認して再読み込みしてね。','error');
+  $('cloudLogin').disabled=true;return;
+ }
+ try{
+  if(!firebase.apps.length)firebase.initializeApp(cfg);
+  cloudAuth=firebase.auth();cloudDb=firebase.firestore();
+  cloudAuth.onAuthStateChanged(user=>{
+   cloudUser=user;
+   if(!user){if(cloudUnsubscribe)cloudUnsubscribe();cloudUnsubscribe=null;cloudReady=false;cloudFatal=false;cloudQueue=[];
+    state=seed();undo=[];redo=[];render();cloudStatus('ログイン待ち','2人それぞれ自分のGoogleアカウントでログインしてね。');return}
+   cloudFatal=false;state=seed();undo=[];redo=[];render();listenMonth();
+  },e=>cloudStatus('認証エラー',e.message,'error'));
+  cloudStatus('ログイン待ち','Googleでログインして共有カレンダーに入ってね。');
+ }catch(e){console.error(e);cloudStatus('設定エラー','Firebase設定値を確認してね。','error')}
+}
+$('cloudLogin').onclick=async()=>{
+ if(!cloudAuth)return;
+ if(location.protocol==='file:'){notify('共有ログインは公開したhttpsのURLから開いてね');return}
+ try{await cloudAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}
+ catch(err){console.error('Google login failed',err);
+  notify('ログイン失敗。Chromeで開いているか、認証済みドメインを確認してね。');
+  cloudStatus('ログインできません',String(err.code||err.message),'error')}
+};
+$('cloudLogout').onclick=async()=>{
+ if(cloudQueue.length||cloudProcessing){notify('保存中のためログアウトできないよ');return}
+ if(cloudAuth)await cloudAuth.signOut();
+};
+
+$('refToggle').onclick=()=>{showRefs=!showRefs;render()};
+document.querySelectorAll('.refSwitch').forEach(x=>x.onchange=()=>{if(x.checked)visibleRefs.add(x.value);else visibleRefs.delete(x.value);render()});
+$('refAdd').onclick=()=>editReference(null,1);$('refCancel').onclick=()=>closeDialog('refDialog');
+$('refForm').onsubmit=ev=>{ev.preventDefault();const value=$('rdate').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(value)||value.slice(0,7)!==month){notify('表示中の月の日付を選んでね');return}
+ const day=Number(value.slice(-2)),cat=$('rcat').value,title=$('rtitle').value.trim(),time=$('rtime').value;if(!refKinds[cat]||!title||day<1||day>dateMonth().days)return;
+ recordChange();const refs=editableRefs();if(refEditId){const current=refs.find(x=>x.id===refEditId);if(current)Object.assign(current,{day,cat,title,time});}else refs.push({id:newId(),day,cat,title,time});
+ closeDialog('refDialog');showRefs=true;commit();notify('仕事・私用の予定を保存したよ')};
+$('refDelete').onclick=()=>{if(!refEditId||!confirm('この仕事・私用の予定を削除する？'))return;removeReference(refEditId);closeDialog('refDialog')};
+$('prev').onclick=()=>changeMonth(-1);$('next').onclick=()=>changeMonth(1);
+$('add').onclick=()=>editEvent(null,new Date().getFullYear()===dateMonth().y&&(new Date().getMonth()+1)===dateMonth().mo?new Date().getDate():1);
+$('paste').onclick=openPaste;$('pasteCancel').onclick=()=>closeDialog('pasteDialog');$('pasteText').addEventListener('input',pastePreview);$('pasteApply').onclick=applyPaste;
+$('undo').onclick=doUndo;$('redo').onclick=doRedo;$('copy').onclick=()=>copyText('all');$('copyHachi').onclick=()=>copyText('hachi');$('copyChar').onclick=()=>copyText('char');$('copyDialogClose').onclick=()=>closeDialog('copyDialog');$('copySelect').onclick=()=>{$('copyPreview').focus();$('copyPreview').select();notify('選択した文章をコピーしてね')};$('csv').onclick=outputCSV;$('picture').onclick=outputImage;$('pictureQuick').onclick=outputImage;$('backup').onclick=backup;$('backupTop').onclick=backup;$('reset').onclick=reset;$('restore').onclick=()=>$('backupInput').click();
+$('backupInput').onchange=async ev=>{const file=ev.target.files[0];ev.target.value='';if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.format!=='hachi-stream-prune'||obj.version!==1||!validData(obj.data))throw Error('形式が違います');if(!confirm('バックアップの内容で今の全月のデータを置き換える？'))return;recordChange();state=clone(obj.data);ensureReferences();if(typeof obj.activeMonth==='string'&&/^\d{4}-(0[1-9]|1[0-2])$/.test(obj.activeMonth))month=obj.activeMonth;filter='keep';commit();listenMonth();notify('共有データへバックアップを取り込んだよ')}catch(err){notify('バックアップを読み込めなかったよ')}};
+$('eventCancel').onclick=()=>closeDialog('eventDialog');$('eventForm').onsubmit=e=>{e.preventDefault();const val=$('edate').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(val))return;const m=val.slice(0,7),day=Number(val.slice(8));if(m!==month){notify('今表示している月の日付を選んでね');return}if(day>dateMonth().days){notify('日付が正しくないよ');return}const who=$('ewho').value,time=$('etime').value,memo=$('egame').value.trim();if(!WHO[who]||!/^\d{2}:\d{2}$/.test(time))return;const cur=getMonth();if(cur.events.some(x=>x.id!==editId&&x.day===day&&x.who===who&&x.time===time)){notify('同じ日時・配信者の枠はすでにあるよ');return}recordChange();const dest=editableMonth();if(editId){const existing=dest.events.find(x=>x.id===editId);if(existing){existing.day=day;existing.who=who;existing.time=time;existing.memo=memo}}else dest.events.push({id:newId(),day,who,time,memo,cut:false});closeDialog('eventDialog');commit();notify(editId?'予定を編集したよ':'新しい配信を追加したよ')};
+$('reallyDelete').onclick=()=>{if(!editId)return;if(!confirm('この配信枠を完全に削除する？\n「↶ 戻す」で復旧できるよ。断捨離だけなら「見送る」がおすすめ。'))return;recordChange();editableMonth().events=editableMonth().events.filter(e=>e.id!==editId);closeDialog('eventDialog');commit();notify('枠を削除したよ（↶ 戻すで復旧できるよ）')};
+$('dayRefAdd').onclick=()=>{closeDialog('dayDialog');editReference(null,daySelected)};$('dayClose').onclick=()=>closeDialog('dayDialog');$('dayAdd').onclick=()=>{closeDialog('dayDialog');editEvent(null,daySelected)};
+$('eventsContainer').addEventListener('click',ev=>{const b=ev.target.closest('[data-action]');if(!b)return;const{id,day,action}=b.dataset;if(action==='toggle')toggle(id);if(action==='edit')editEvent(id);if(action==='addday')editEvent(null,Number(day));if(action==='day')listDay(Number(day));if(action==='editRef')editReference(id)});
+$('dayDialogEvents').addEventListener('click',ev=>{const b=ev.target.closest('[data-action]');if(!b)return;const{id,action}=b.dataset;if(action==='toggle'){toggle(id);closeDialog('dayDialog');listDay(daySelected)}if(action==='edit'){closeDialog('dayDialog');editEvent(id)}if(action==='editRef'){closeDialog('dayDialog');editReference(id)}});
+document.querySelectorAll('.audience-btn').forEach(b=>b.onclick=()=>{audience=b.dataset.audience;persist();render()});document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render()});document.querySelectorAll('.view').forEach(b=>b.onclick=()=>{view=b.dataset.view;persist();render()});
+if(!persistOK)notify('画面表示の設定を保存できない環境かも');render();initCloud();
+})();
+</script>
+</body>
+</html>
